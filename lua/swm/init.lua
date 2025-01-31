@@ -32,7 +32,7 @@ local function get_window_by_pos(pos)
         height = vim.api.nvim_win_get_height(win) + 1, -- this is statusline offset.
       }
       local win_config = vim.api.nvim_win_get_config(win)
-      local win_z_index = win_config.relative == '0' and -1 or win_config.zindex or 0
+      local win_z_index = win_config.relative == '' and -1 or win_config.zindex or 0
 
       local contains = true
       contains = contains and win_pos.row <= pos.row and pos.row < win_pos.row + win_size.height
