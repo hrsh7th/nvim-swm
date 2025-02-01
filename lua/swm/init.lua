@@ -48,6 +48,9 @@ local function get_window_by_pos(pos)
   return window or vim.api.nvim_get_current_win()
 end
 
+---Move cursor to nearest window in 'h' direction.
+---NOTE: if return `false`, it means the target window is not found.
+---@return boolean
 function swm.h()
   local current_win = vim.api.nvim_get_current_win()
 
@@ -57,11 +60,15 @@ function swm.h()
     local win = get_window_by_pos(pos)
     if win ~= current_win then
       vim.api.nvim_set_current_win(win)
-      return
+      return true
     end
   end
+  return false
 end
 
+---Move cursor to nearest window in 'j' direction.
+---NOTE: if return `false`, it means the target window is not found.
+---@return boolean
 function swm.j()
   local current_win = vim.api.nvim_get_current_win()
 
@@ -71,11 +78,15 @@ function swm.j()
     local win = get_window_by_pos(pos)
     if win ~= current_win then
       vim.api.nvim_set_current_win(win)
-      return
+      return true
     end
   end
+  return false
 end
 
+---Move cursor to nearest window in 'k' direction.
+---NOTE: if return `false`, it means the target window is not found.
+---@return boolean
 function swm.k()
   local current_win = vim.api.nvim_get_current_win()
 
@@ -85,11 +96,15 @@ function swm.k()
     local win = get_window_by_pos(pos)
     if win ~= current_win then
       vim.api.nvim_set_current_win(win)
-      return
+      return true
     end
   end
+  return false
 end
 
+---Move cursor to nearest window in 'l' direction.
+---NOTE: if return `false`, it means the target window is not found.
+---@return boolean
 function swm.l()
   local current_win = vim.api.nvim_get_current_win()
 
@@ -99,9 +114,10 @@ function swm.l()
     local win = get_window_by_pos(pos)
     if win ~= current_win then
       vim.api.nvim_set_current_win(win)
-      return
+      return true
     end
   end
+  return false
 end
 
 return swm
