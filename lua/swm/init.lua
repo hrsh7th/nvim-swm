@@ -18,10 +18,11 @@ end
 ---@return integer
 local function get_window_by_pos(pos)
   local tab = vim.api.nvim_get_current_tabpage()
-  local z_index = -2
+  local zindex = -2
   local window = nil --[[@as integer?]]
   for _, win in ipairs(vim.api.nvim_list_wins()) do
     if vim.api.nvim_win_get_tabpage(win) == tab then
+      local win_config = vim.api.nvim_win_get_config(win)
       local win_row, win_col = unpack(vim.api.nvim_win_get_position(win))
       local win_pos = {
         row = win_row,
@@ -29,17 +30,19 @@ local function get_window_by_pos(pos)
       }
       local win_size = {
         width = vim.api.nvim_win_get_width(win),
-        height = vim.api.nvim_win_get_height(win) + 1, -- this is statusline offset.
+        height = vim.api.nvim_win_get_height(win)
       }
-      local win_config = vim.api.nvim_win_get_config(win)
-      local win_z_index = win_config.relative == '' and -1 or win_config.zindex or 0
+      if win_config.relative == '' then
+        win_size.height = win_size.height + 1 -- statusline.
+      end
+      local win_zindex = win_config.relative == '' and -1 or win_config.zindex or 0
 
       local contains = true
       contains = contains and win_pos.row <= pos.row and pos.row < win_pos.row + win_size.height
       contains = contains and win_pos.col <= pos.col and pos.col < win_pos.col + win_size.width
       if contains then
-        if win_z_index > z_index then
-          z_index = win_z_index
+        if win_zindex > zindex then
+          zindex = win_zindex
           window = win
         end
       end
