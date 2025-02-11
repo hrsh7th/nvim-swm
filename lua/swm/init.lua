@@ -21,8 +21,8 @@ local function get_window_by_pos(pos)
   local zindex = -2
   local window = nil --[[@as integer?]]
   for _, win in ipairs(vim.api.nvim_list_wins()) do
-    if vim.api.nvim_win_get_tabpage(win) == tab then
-      local win_config = vim.api.nvim_win_get_config(win)
+    local win_config = vim.api.nvim_win_get_config(win)
+    if vim.api.nvim_win_get_tabpage(win) == tab and win_config.focusable then
       local win_row, win_col = unpack(vim.api.nvim_win_get_position(win))
       local win_pos = {
         row = win_row,
